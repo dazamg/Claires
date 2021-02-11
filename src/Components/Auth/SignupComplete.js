@@ -12,16 +12,50 @@ const SignupComplete = ({history}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
-    useState(() => {
+    useEffect(() => {
         setEmail(window.localStorage.getItem("emailForRegistration"))
+   
     }, [])
 
     // Form function 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // object with the link to take a user to the next page 
-        //to complete their registration
-          
+        //validation
+        if(!email || !password) {
+            toast.error('Email and password is required')
+            return;
+        }
+
+        if(password.length < 6) {
+            toast.error('Password must be at least 6 character')
+            return;
+        } 
+
+
+        try {
+            const result = await auth.signInWithEmailLink(email, window.location.href );
+            // console.log("Result", result);
+            // How it works log the user with email link then email that existing email from local storage
+            // then update that user with password
+            //
+            if(result.user.emailVerified) {
+                // remove user email from local storage
+                window.localStorage.removeItem("emailForRegistration")
+                // get user id  token
+                let user = auth.currentUser
+                await user.updatePassword(password)
+                const idTokenResult = await user.getIdTokenResult()
+                // redux store
+                console.log("user", user, "idTokenResult ")
+                //redirect
+                history.push('/')
+            }
+        } 
+        catch(error) {
+            console.log(error)
+            toast.error(error.message)
+        }
     }
    
 
