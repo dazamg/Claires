@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {auth} from '../../firebase'
+import { useSelector } from 'react-redux'
 
 //toast 
 import {toast} from 'react-toastify'
@@ -7,30 +8,33 @@ import {toast} from 'react-toastify'
 
 
 
-const Signup = () => {
+const Signup = ({history}) => {
     // When a user types in the input feild, the value needs to be saved in state
     const [email, setEmail] = useState("");
-    
-    // Form function 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        // object with the link to take a user to the next page 
-        //to complete their registration
-        const config = {
-            url: process.env.REACT_APP_SIGNUP_REDIRECT_URL,
-            //allow a user to complete registration on only one device
-            handleCodeInApp: true
-        }
-        await auth.sendSignInLinkToEmail(email,config);
-        toast.success(
-            `Email is sent to ${email}. Click the link to complete your registration`
-            );
-       // save user email in local storage
-        window.localStorage.setItem('emailForRegistration', email)
 
-        //clear state
-        setEmail("");      
-    }
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    if (user && user.token) history.push("/");
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("ENV --->", process.env.REACT_APP_REGISTER_REDIRECT_URL);
+    const config = {
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      handleCodeInApp: true,
+    };
+
+    await auth.sendSignInLinkToEmail(email, config);
+    toast.success(
+      `Email is sent to ${email}. Click the link to complete your registration.`
+    );
+    // save user email in local storage
+    window.localStorage.setItem("emailForRegistration", email);
+    // clear state
+    setEmail("");
+  };
    
 
     const signUpForm = () => <
@@ -39,9 +43,11 @@ const Signup = () => {
             type="email" 
             className="form-control" 
             onChange={e => setEmail(e.target.value)} 
+            placeholder="Enter Email"
             value={email} 
             autoFocus/>
 
+            <br />
             <button type="submit" className=" btn btn-raised">
             Sign Up</button>
         </form>
