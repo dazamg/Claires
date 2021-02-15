@@ -22,6 +22,8 @@ import AdminRoute from "./Components/routes/AdminRoute"
 import AdminDashboard from "./Components/admin/AdminDashboard"
 import CategoryCreate from "./Components/admin/category/CategoryCreate"
 import CategoryUpdate from "./Components/admin/category/CategoryUpdate"
+import SubCreate from "./Components/admin/sub/SubCreate"
+import SubUpdate from "./Components/admin/sub/SubUpdate"
 
 import {auth} from './firebase'
 import {useDispatch} from 'react-redux'
@@ -73,6 +75,8 @@ const App = () => {
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+        <AdminRoute exact path="/admin/sub" component={SubCreate} />
+        <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
       </Switch>
     </>
   );

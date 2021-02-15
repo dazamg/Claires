@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import AdminNav from '../../nav/AdminNav'
 import {updateCategory, getCategory} from '../../../functions/category'
-import { Link } from "react-router-dom";
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
+// import { Link } from "react-router-dom";
+// import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import CategoryForm from '../../forms/CategoryForm'
 
 

@@ -2,40 +2,50 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import AdminNav from '../../nav/AdminNav'
-import {createCategory, getCategories, removeCategory} from '../../../functions/category'
+import {getCategories} from '../../../functions/category'
+import {createSub, removeSub, getSubs} from '../../../functions/sub'
 import { Link } from "react-router-dom";
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import CategoryForm from '../../forms/CategoryForm'
 import SearchFilterForm from '../../forms/SearchFilterForm'
 
 
-const CategoryCreate = () => {
+const SubCreate = () => {
     const {user} = useSelector((state) => ({ ...state}));
     const [name, setName] = useState("")
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([])
-
+    const [category, setCategory] = useState("")
+    const [subs, setSubs] = useState([])
     const [searchquery, setSearchquery] = useState("")
 
     useEffect(() => {
       loadCategories()
+      loadSubs()
     }, [])
 
-    const loadCategories = () => 
+    const loadCategories = () => {
       getCategories()
       .then(c => setCategories(c.data))
+    }
+    
+    const loadSubs = () => {
+      getSubs()
+      .then(s => setSubs(s.data))
+    }
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        createCategory({name}, user.token)
+        createSub({name, parent: category}, user.token)
         .then((res) => {
             // console.log(res)
             setLoading(false);
             setName("");
             toast.success(`"${res.data.name}" is created`)
-            loadCategories()
+            loadSubs()
         })
         .catch((err) => {
             console.log(err)
@@ -47,11 +57,11 @@ const CategoryCreate = () => {
     const handleRemove = async(slug) => {
       if(window.confirm("Delete?")) {
         setLoading(true)
-        removeCategory(slug, user.token)
+        removeSub(slug, user.token)
         .then(res => {
           setLoading(false)
           toast.error(`${res.data.name} deleted`)
-          loadCategories()
+          loadSubs()
         })
         .catch((err)  => {
           if(err.response.status === 400){
@@ -76,23 +86,40 @@ const CategoryCreate = () => {
             {loading ? (
             <h4 className="text-danger">Loading</h4>
           ) : (
-            <h4>Create category</h4>
+            <h4>Create Sub category</h4>
           )}
-          <CategoryForm handleSubmit={handleSubmit} 
-          name={name}
-          setName={setName}/>
 
-          < SearchFilterForm searchquery={searchquery} setSearchquery={setSearchquery}/>
+        <div className="form-group">
+            <label>Category</label>
+            <select name="category" 
+            // className="form-control"
+            onChange={(e) => setCategory(e.target.value)}
+            >
+                <option>Please Select</option>
+                {categories.length > 0 && 
+                categories.map((c) =>(
+                <option key={c._id} value={c._id}>
+                    {c.name}
+                </option>))}
+            </select>
+        </div>
+        
+        <CategoryForm handleSubmit={handleSubmit} 
+          name={name}
+          setName={setName}
+        />
+
+        < SearchFilterForm searchquery={searchquery} setSearchquery={setSearchquery}/>
 
           {/* Filter out the search query then return the query onclick*/}
-          {categories.filter(searched(searchquery)).map((c) =>(
-            <div className="alert alert-secondary" key={c._id}>
-              {c.name} 
-              <span onClick={() => handleRemove(c.slug)} 
+          {subs.filter(searched(searchquery)).map((s) =>(
+            <div className="alert alert-secondary" key={s._id}>
+              {s.name} 
+              <span onClick={() => handleRemove(s.slug)} 
               className="btn btn-sm float-right">
                 <DeleteOutlined className="text-warning"/></span>
               <span className="btn btn-sm float-right">
-                <Link to={`/admin/category/${c.slug}`}>
+                <Link to={`/admin/sub/${s.slug}`}>
                 <EditOutlined className="text-warning"/>
               </Link>
               </span>
@@ -106,4 +133,4 @@ const CategoryCreate = () => {
   );
 };
 
-export default CategoryCreate;
+export default SubCreate;
