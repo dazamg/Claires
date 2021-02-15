@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
+import { MailOutlined, GoogleOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {createOrUpdateUser} from "../../functions/auth";
@@ -11,20 +11,20 @@ import {createOrUpdateUser} from "../../functions/auth";
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState("kishon@clairvisual.com");
-    const [password, setPassword] = useState("1234567");
+    const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState(false);
   
     const { user } = useSelector((state) => ({ ...state }));
   
     useEffect(() => {
       if (user && user.token) history.push("/");
-    }, [user]);
+    }, [user, history]);
   
     let dispatch = useDispatch();
 
     const roleBaseRedirect = (res) => {
         if (res.data.role === "admin") {
-            history.push("/admin/ dashboard")
+            history.push("/admin/dashboard")
         } else {
             history.push("/user/history")
         }
@@ -137,7 +137,7 @@ const Login = ({ history }) => {
         <div className="row">
           <div className="col-md-6 offset-md-3">
             {loading ? (
-              <h4 className="text-danger">Loading...</h4>
+              <h4 className="text-danger"><LoadingOutlined /></h4>
             ) : (
               <h4>Login</h4>
             )}
