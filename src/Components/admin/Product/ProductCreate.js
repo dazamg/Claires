@@ -79,11 +79,14 @@ const initialState = {
           </div>
   
           <div className="col-md-10">
-            {loading ?  <LoadingOutlined className="text-danger h1" /> : <h4>Product create</h4>}
-            
+            {loading ? (
+              <LoadingOutlined className="text-danger h1" />
+            ) : (
+              <h4>Product create</h4>
+            )}
             <hr />
   
-            {JSON.stringify(values.images)}
+            {/* {JSON.stringify(values.images)} */}
   
             <div className="p-3">
               <FileUpload
