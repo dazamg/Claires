@@ -27,3 +27,15 @@ export const getProduct = async (slug) =>
       authtoken,
     },
   });
+
+  export const getHomeProducts = async (sort, order, page) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/products`, {
+      sort,
+      order,
+      page,
+  });
+
+  export const productCountTotal = async () =>
+  await axios.get(
+    `${process.env.REACT_APP_API}/products/total`);

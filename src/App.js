@@ -31,6 +31,7 @@ import SubUpdate from "./Components/admin/sub/SubUpdate"
 import ProductCreate from "./Components/admin/Product/ProductCreate"
 import AllProducts from "./Components/admin/Product/AllProducts"
 import ProductUpdate from "./Components/admin/Product/ProductUpdate"
+import Product from "./Components/Product"
 
 //Firebase and Redux
 import {auth} from './firebase'
@@ -74,6 +75,9 @@ const App = () => {
       <Switch>
         {/* Home ROUTE */}
         <Route exact path="/" component={Home} />
+        {/* View Product ROUTE */}
+        <Route exact path="/product/:slug" component={Product} />
+
         {/* Auth Routes */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />

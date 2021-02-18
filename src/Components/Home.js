@@ -1,41 +1,31 @@
-import React, {useState, useEffect} from 'react'
-import {getProductsByCount} from '../functions/Product'
-import ProductCard from '../Components/cards/ProductCard'
-
+import React from 'react'
+import TypewriterEffect from '../Components/cards/TypewriterEffect'
+import JeanCollections from '../Components/Home/JeanCollections'
+import BestSellers from '../Components/Home/BestSellers'
 const Home = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+
   
-    useEffect(() => {
-      loadAllProducts();
-    }, []);
-  
-    const loadAllProducts = () => {
-      setLoading(true);
-      getProductsByCount(3).then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      });
-    };
   
     return (
       <>
-        <div className="jumbotron">
-          {loading ? <h4>Loading...</h4> : <h4>All Products</h4>}
+        <div className="jumbotron h1 font-weight-bold text-center text-danger">
+            <TypewriterEffect text={['Welcome','to Claire`s']}/>
+          
         </div>
-  
-        <div className="container">
-          <div className="row">
-            {products.map((product) => (
-              <div key={product._id} className="col-md-4">
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </>
-    );
-  };
+       <h4 className=" text-center p-3 mt-5 display">
+         Our Latest  Jeans Collection
+         </h4>  
+         <br/>
+         <JeanCollections/>
+
+         <h4 className=" text-center p-3 mt-5 display">
+         Best Sellers
+         </h4>
+         <BestSellers />
+    </>
+  );
+};
+
   
   export default Home;
   
