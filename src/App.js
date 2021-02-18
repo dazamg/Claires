@@ -32,8 +32,10 @@ import ProductCreate from "./Components/admin/Product/ProductCreate"
 import AllProducts from "./Components/admin/Product/AllProducts"
 import ProductUpdate from "./Components/admin/Product/ProductUpdate"
 import Product from "./Components/Product"
+import CategoryHome from "./Components/category/CategoryHome"
+import SubHome from "./Components/Sub/SubHome"
 
-//Firebase and Redux
+//Firebase and Red
 import {auth} from './firebase'
 import {useDispatch} from 'react-redux'
 import { currentUser } from "./functions/auth";
@@ -77,6 +79,8 @@ const App = () => {
         <Route exact path="/" component={Home} />
         {/* View Product ROUTE */}
         <Route exact path="/product/:slug" component={Product} />
+        <Route exact path="/category/:slug" component={CategoryHome} />
+        <Route exact path="/sub/:slug" component={SubHome} />
 
         {/* Auth Routes */}
         <Route exact path="/login" component={Login} />

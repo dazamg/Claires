@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Card} from 'antd'
 import {EyeOutlined, ShoppingCartOutlined} from "@ant-design/icons"
 import jeans from "../../images/jeans.jpg";
@@ -8,9 +8,18 @@ const { Meta } = Card;
 
 const ProductCard = ({product}) => {
     const {images, title, description, slug, price} = product
+    
+    
+    const HandleSubmit = (e) => {
+        e.preventDefault()
+        
+        
+    }
     return (
         <Card
+            
             cover={
+                
                 <img
                 src={images && images.length ? images[0].url : jeans}
                 style={{ height: "150px", objectFit: "cover" }}
@@ -20,6 +29,8 @@ const ProductCard = ({product}) => {
 
             actions={[
                 <Link to={`/product/${slug}`}>
+
+                    
                     <EyeOutlined className="text-warning" /> 
                     <br/> View Product
                 </Link>,
