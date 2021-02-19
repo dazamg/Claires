@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import {Menu} from 'antd'
+import {Menu,Badge} from 'antd'
 import { HomeOutlined , 
     SettingOutlined, 
     UserOutlined, 
     UserAddOutlined, 
     LogoutOutlined, 
     DashboardOutlined,
-    ShoppingOutlined} from '@ant-design/icons';
+    ShoppingOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,7 +18,7 @@ const Header = () => {
     const [current, setCurrent] = useState('home')
     let dispatch = useDispatch()
     let history = useHistory()
-    let {user} = useSelector((state) => ({...state
+    let {user, cart} = useSelector((state) => ({...state
     }))
 
     const handleClick = (e) => {
@@ -45,6 +45,13 @@ const Header = () => {
 
             <Item key="shop" icon={<ShoppingOutlined  className="text-success"/>}>
                 <Link to="/shop">Shop</Link>
+            </Item>
+
+            <Item key="cart" icon={<ShoppingCartOutlined  className="text-success"/>}>
+                <Link to="/cart">
+                <Badge count={cart.length} offset={[9,0]}>
+                  Cart     
+                </Badge></Link>
             </Item>
 
             {!user && (

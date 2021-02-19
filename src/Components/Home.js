@@ -4,7 +4,7 @@ import JeanCollections from '../Components/Home/JeanCollections'
 import BestSellers from '../Components/Home/BestSellers'
 import CategoryList from "./category/CategoryList"
 import subList from "./Sub/SubList"
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout} from 'antd';
 import SubList from './Sub/SubList'
 
 const { Footer } = Layout;

@@ -34,6 +34,7 @@ import ProductUpdate from "./Components/admin/Product/ProductUpdate"
 import Product from "./Components/Product"
 import CategoryHome from "./Components/category/CategoryHome"
 import SubHome from "./Components/Sub/SubHome"
+import Cart from "./Components/Cart"
 
 import Shop from "./Components/Shop"
 
@@ -84,6 +85,7 @@ const App = () => {
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
         <Route exact path="/shop" component={Shop} />
+        <Route exact path="/cart" component={Cart} />
 
         {/* Auth Routes */}
         <Route exact path="/login" component={Login} />
