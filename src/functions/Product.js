@@ -39,3 +39,8 @@ export const getProduct = async (slug) =>
   export const productCountTotal = async () =>
   await axios.get(
     `${process.env.REACT_APP_API}/products/total`);
+
+
+    export const searchByFilter = async (arg) =>
+    await axios.post(
+      `${process.env.REACT_APP_API}/search/filters`, arg);

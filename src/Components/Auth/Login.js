@@ -139,7 +139,7 @@ const Login = ({ history }) => {
             {loading ? (
               <h4 className="text-danger"><LoadingOutlined /></h4>
             ) : (
-              <h4>Login</h4>
+              <h3 className="text-center">Login</h3>
             )}
             {loginForm()}
   

@@ -10,7 +10,7 @@ const AdminDashboard = () => {
           <AdminNav />
         </div>
         <div>
-          <h4>Admin Dashboard</h4>
+          <h4 className="text-center mm">Admin Dashboard</h4>
         </div>
       </div>
     </div>
