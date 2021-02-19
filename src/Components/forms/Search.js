@@ -10,7 +10,7 @@ const Search = () => {
     // WHEN A USER HIT THE INPUT TAKE THEM TO THE SHOP PAGE
     const {text} = search;
 
-    const  history = useHistory
+    const  history = useHistory()
 
     const handleChange = (e) => {
         dispatch({

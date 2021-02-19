@@ -4,7 +4,9 @@ import { HomeOutlined , SettingOutlined, UserOutlined, UserAddOutlined, LogoutOu
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase'
 import { useDispatch, useSelector } from 'react-redux'
+import Search from '../forms/Search'
 const { SubMenu, Item } = Menu;
+
 
 const Header = () => {
     const [current, setCurrent] = useState('home')
@@ -70,6 +72,8 @@ const Header = () => {
         
                 </SubMenu>
             )}
+
+            <span className="float-right"> <Search /></span>
   
       </Menu>
 
