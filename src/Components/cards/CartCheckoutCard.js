@@ -2,6 +2,9 @@ import React from 'react'
 import ModalImage from "react-modal-image";
 import jeans from "../../images/jeans.jpg";
 import {useDispatch } from "react-redux";
+import {CheckCircleOutlined, CloseCircleOutlined, CloseOutlined} from '@ant-design/icons';
+import { toast } from 'react-toastify';
+
 
 const CartCheckoutCard = ({p}) => {
     const colors = ["Black", "Brown", "Silver", "White", "Blue", "Grey"]
@@ -29,7 +32,57 @@ const CartCheckoutCard = ({p}) => {
         })
         }
     }
-    return (
+
+    const handleCount = (e) => {
+        
+        let count = e.target.value < 1 ? 1 : e.target.value
+        //check the quantity against the database
+        if(count > p.quantity) {
+            toast.error(`Max available quantity: ${p.quantity}`)
+            return;
+        }
+         let cart = []
+        
+        if(typeof window !== 'undefined') {
+            if(localStorage.getItem("cart")) {
+                cart = JSON.parse(localStorage.getItem("cart"))
+            }
+            cart.map((product, index) => {
+                if(product._id === p._id) {
+                    cart[index].count = count
+                }
+                
+            })
+            localStorage.setItem('cart', JSON.stringify(cart))
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: cart,
+            })
+        }
+    }
+
+    const handleRemove = () => {
+        console.log(p._id, "remove")
+        let cart = []
+        
+        if(typeof window !== 'undefined') {
+            if(localStorage.getItem("cart")) {
+                cart = JSON.parse(localStorage.getItem("cart"))
+            }
+            cart.map((product, index) => {
+                if(product._id === p._id) {
+                    cart.splice(index, 1)
+                }
+                
+            })
+            localStorage.setItem('cart', JSON.stringify(cart))
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: cart,
+            })
+        }
+    }
+     return (
         <tbody>
             <tr>
                 <div style={{width: "100px", height: "auto"}}>
@@ -53,9 +106,15 @@ const CartCheckoutCard = ({p}) => {
                             </option>
                         ))}
                     </select>
-                <td>{p.count}</td>
-                <td>Shipping</td>
-                <td>Delete icon</td>
+                <td className="text-center">
+                    <input
+                    type="number"
+                    className="form-control" value={p.count} onChange={handleCount}/>
+                </td>
+                <td className="text-center">{p.shipping === "Yes" ? <CheckCircleOutlined  className="text-success"/> : <CloseCircleOutlined className="text-danger"/>}</td>
+                <td className="text-center">
+                    <CloseOutlined onClick={handleRemove} className="text-danger pointer"/>
+                </td>
             </tr>
         </tbody>
     )
