@@ -42,7 +42,7 @@ const Cart = () => {
     <div className="container-fluid pt-2">
       <div className="row">
         <div className="col-md-8">
-          <h4>Cart / {cart.length} Items</h4>
+          <h4>You have {cart.length} Items in your Cart</h4>
 
           {!cart.length ? (
             <p>
@@ -69,13 +69,13 @@ const Cart = () => {
           {user ? (
             <button
               onClick={checkOut}
-              className="btn btn-sm btn-primary mt-2"
+              className="btn btn-sm btn-primary mt-2 btn-raised"
               disabled={!cart.length}
             >
             Checkout
             </button>
           ) : (
-            <button className="btn btn-sm btn-primary mt-2">
+            <button className="btn-sm  mt-2" >
               <Link
                 to={{
                   pathname: "/login",
