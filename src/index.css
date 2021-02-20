@@ -12,15 +12,28 @@ code {
     monospace;
 }
 
-.slider img, 
+/* .slider img, 
 .card-image {
   height: 450px;
   object-fit: cover
 }
+.carousel-image {
+  height: 450px;
+  object-fit: cover
+} */
+
 .bob {
   background: rgb(238,174,202);
   background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 .pointer {
   cursor: pointer;
+}
+/* .slider img {
+  height: 450px;
+  object-fit: cover
+} */
+
+footer {
+  color: aqua
 }
