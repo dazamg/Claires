@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import CartCheckoutCard from './cards/CartCheckoutCard'
 const Cart = () => {
   const { cart, user } = useSelector((state) => ({ ...state }));
-  const dispatch = useDispatch();
+
 
   //Function to calculate total
   const getTotal = () => {

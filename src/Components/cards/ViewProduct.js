@@ -15,7 +15,7 @@ const ViewProduct = ({product}) => {
     const [toolTip, setToolTip] = useState("Click to add")
     const {images, title, description} = product
 
-    const {user, cart } = useSelector((state) => ({ ...state}));
+    // const {user, cart } = useSelector((state) => ({ ...state}));
     const dispatch = useDispatch()
 
     const handleSubmit = () => {
@@ -43,6 +43,12 @@ const ViewProduct = ({product}) => {
             dispatch({
                 type: "ADD_TO_CART",
                 payload: duplicate,
+            })
+
+            // show cart items in side drawer
+            dispatch({
+                type: "SET_VISIBLE",
+                payload: true,
             })
         }
     }

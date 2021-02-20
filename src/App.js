@@ -7,8 +7,11 @@ import "react-toastify/dist/ReactToastify.css"
 
 import './Home.css';
 
-
+//Nav header Components
 import Home from "./Components/Home"
+import SideDrawer from "./Components/drawer/SideDrawer"
+import Shop from "./Components/Shop"
+
 //Auth Components
 import Login from "./Components/Auth/Login"
 import Signup from "./Components/Auth/Signup"
@@ -36,7 +39,6 @@ import CategoryHome from "./Components/category/CategoryHome"
 import SubHome from "./Components/Sub/SubHome"
 import Cart from "./Components/Cart"
 
-import Shop from "./Components/Shop"
 
 //Firebase and Red
 import {auth} from './firebase'
@@ -76,6 +78,9 @@ const App = () => {
   return (
     <>
       <Header />
+      {/* Pop up side Nav */}
+      <SideDrawer />
+      {/* Toast message container */}
       <ToastContainer />
       <Switch>
         {/* Home ROUTE */}

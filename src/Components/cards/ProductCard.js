@@ -4,7 +4,7 @@ import {EyeOutlined, ShoppingCartOutlined} from "@ant-design/icons"
 import jeans from "../../images/jeans.jpg";
 import {Link} from 'react-router-dom'
 import _ from 'lodash'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 
 const { Meta } = Card;
 
@@ -13,7 +13,7 @@ const ProductCard = ({product}) => {
     const [toolTip, setToolTip] = useState("Click to add")
     const {images, title, description, slug, price} = product
 
-    const {user, cart } = useSelector((state) => ({ ...state}));
+    // const {user, cart } = useSelector((state) => ({ ...state}));
     const dispatch = useDispatch()
     
     
@@ -42,6 +42,11 @@ const ProductCard = ({product}) => {
             dispatch({
                 type: "ADD_TO_CART",
                 payload: duplicate,
+            })
+            // show cart items in side drawer
+            dispatch({
+                type: "SET_VISIBLE",
+                payload: true,
             })
         }
     }
