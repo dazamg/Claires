@@ -8,13 +8,12 @@ const SearchFilterForm = ({searchquery, setSearchquery}) => {
       };
 
     return (
-     
-            <input type="search" placeholder="Filter" 
-            value={searchquery} 
-            onChange={handleSearchChange}
-            className="form-control mb-4"
-            />
-    )
+      <input type="search" placeholder="Filter" 
+      value={searchquery} 
+      onChange={handleSearchChange}
+      className="form-control mb-4"
+      />  
+  )
 }
 
 export default SearchFilterForm
