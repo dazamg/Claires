@@ -48,6 +48,9 @@ I wanted to get a deeper understanding of react. Since eccommence is on the rais
 I used the following course to help troubleshoot some of my conditioning issues:
 - https://www.udemy.com/share/101WbyAEEeclZSTHkD/
 
+-StackOverflow
+-Youtube
+
 React packages that help me alot:
 - https://www.npmjs.com/package/react-image-file-resizer
 -https://www.npmjs.com/package/typewriter-effect
