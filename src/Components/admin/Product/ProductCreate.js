@@ -9,14 +9,14 @@ import FileUpload from '../../../Components/forms/FileUpload'
 import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
-    title: "",
-    description: "",
-    price: "",
+    title: "Levi",
+    description: "540 levi's collection",
+    price: "95",
     categories: [],
     category: "",
     subs: [],
     shipping: "",
-    quantity: "",
+    quantity: "45",
     images: [],
     colors: ["Black", "Brown", "Silver", "White", "Blue", "Grey"],
     brands: ["Nike", "Denim", "Addidas", "Target", "Under Amor"],

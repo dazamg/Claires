@@ -33,18 +33,18 @@ const AdminNav = () => (
           Brand
         </Link>
       </li>
-
-      {/* <li className="nav-item">
+{/* 
+      <li className="nav-item">
         <Link to="/admin/coupon" className="nav-link">
           coupon
         </Link>
-      </li>
+      </li> */}
 
       <li className="nav-item">
         <Link to="/user/password" className="nav-link">
           Password
         </Link>
-      </li> */}
+      </li>
     </ul>
   </nav>
 );

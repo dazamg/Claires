@@ -1,11 +1,13 @@
 # CLaire's
 ### Demo
 
-## Available Scripts
+## Wireframes
 
-In the project directory, you can run:
-
-### `npm start`
+![Home](![Home](/ProductWireframes/HomePage.png))
+![ShoppingCart](![Home](/Wireframes/Home.png))
+![Login](![Home](/Wireframes/Home.png))
+![SearchPage](![Home](/Wireframes/Home.png))
+![ProductViewPage](![Home](/Wireframes/Home.png))
 
 ## User Stories
 - As a user, I would like be able to see available products
