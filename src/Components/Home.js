@@ -41,8 +41,8 @@ const Home = () => {
          <Footer className="text-center" >
            <div className="container-fluid">
              <div className="row float-right">
-                  <Link><GithubOutlined className="h5"/><br/>Github </Link>
-                  <Link><LinkedinOutlined className="h5"/> <br/> Linkedin</Link>
+                  <a href="https://github.com/dazamg/Claires"><GithubOutlined className="h5"/><br/>Github </a>
+                  <a href="https://www.linkedin.com/in/kishon-stclair-95b5561aa/"><LinkedinOutlined className="h5"/> <br/> Linkedin</a>
              </div>
            </div>
            GA ©2021 Created by Clairvisual</Footer>

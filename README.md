@@ -1,13 +1,18 @@
 # CLaire's
-### Demo
+### Demo - http://p4-claires.surge.sh/
+
+### Backend repo- https://github.com/dazamg/ecommence_project4.git
 
 ## Wireframes
 
-![Home](![Home](/ProductWireframes/HomePage.png))
-![ShoppingCart](![Home](/Wireframes/Home.png))
-![Login](![Home](/Wireframes/Home.png))
-![SearchPage](![Home](/Wireframes/Home.png))
-![ProductViewPage](![Home](/Wireframes/Home.png))
+![Home](/ProductWireframes/HomePage.png)
+
+![ShoppingCart](/ProductWireframes/CartPage.png)
+![Login](ProductWireframes/LoginPage.png)
+
+![SearchPage](/ProductWireframes/Search:ALLitemsPage.png)
+
+![ProductViewPage](ProductWireframes/ProductView.png)
 
 ## User Stories
 - As a user, I would like be able to see available products
