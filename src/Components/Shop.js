@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react'
 import {getProductsByCount, searchByFilter} from '../functions/Product'
 import {useSelector, useDispatch} from 'react-redux'
 import ProductCard from './cards/ProductCard'
-import {  DownSquareOutlined  } from '@ant-design/icons';
-import { Menu } from "antd";
+import {  DownSquareOutlined, DollarOutlined } from '@ant-design/icons';
+import { Menu, Slider } from "antd";
 
 const { SubMenu, ItemGroup } = Menu;
 const Shop = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [price, setPrice] = useState([0, 0])
+    const [ok, setOk] = useState([0, 0])
 
     // I need to access search from the redux state
+    let dispatch = useDispatch();
     let {search} = useSelector((state) => ({...state}));
     const { text } = search
 
@@ -36,6 +39,21 @@ const Shop = () => {
             setProducts(res.data)
         })
     }
+
+    // Load products base on price range
+    useEffect(() => {
+      console.log('Request is good')
+      filterProducts({price})
+      
+    }, [ok])
+
+    const handleSlider = (value) => {
+      dispatch({
+        type: "SEARCH_QUERY"
+      })
+      setPrice(value)
+    }
+
     return (
         <div className="container-fluid">
         <div className="row">
@@ -46,14 +64,31 @@ const Shop = () => {
             <Menu defaultOpenKeys={["1", "2"]} mode="inline">
               {/* category */}
               <SubMenu
-                key="2"
+                key="1"
+
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Categories
+                    <DollarOutlined /> Price
                   </span>
                 }
               >
-                <div style={{ maringTop: "-10px" }}></div>
+                <div style={{ maringTop: "-10px" }}>
+                  <Slider className="ml-4 mr-4" 
+                  tipFormatter={(v) => `$${v}`} 
+                  range value={price}
+                  onChange={handleSlider}
+                  max="300"/>
+                </div>
+              </SubMenu>
+              <SubMenu
+
+                //key=2
+
+                 // <span className="h6">
+                  //   <DownSquareOutlined /> Categories
+                  // </span>
+              >
+                
               </SubMenu>
             </Menu>
           </div>
