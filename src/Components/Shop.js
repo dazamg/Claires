@@ -13,6 +13,7 @@ const Shop = () => {
   const [price, setPrice] = useState([0, 0]);
   const [ok, setOk] = useState(false);
   const [categories, setCatergories] = useState([])
+  const [categoryIds, setCaategoryIds ] = useState([])
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -60,6 +61,7 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+    setCaategoryIds([])
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -74,7 +76,8 @@ const Shop = () => {
       onChange={handleCheck}
       className="pb-2 pl-4 pr-4" 
       value={c._id}
-      name="category">
+      name="category"
+      checked={categoryIds.includes(c._id)}>
         {c.name}
         <br/>
       </Checkbox>
@@ -83,7 +86,26 @@ const Shop = () => {
 
   // handle check functiom
   const handleCheck = (e) => {
-    //
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0,0])
+    // console.log(e.target.value)
+    let newCheck = [...categoryIds]
+    let nextChecked = e.target.value
+    let foundNewCheck = newCheck.indexOf(nextChecked) // index or -1
+
+    //indexOf method ?? if not found returns -1 else return index
+    if(foundNewCheck === -1) {
+      newCheck.push(nextChecked);
+    } else {
+      // if found pull out one item from index
+      newCheck.splice(foundNewCheck, 1)
+    }
+    setCaategoryIds(newCheck);
+    // console.log(newCheck)
+    filterProducts({category: newCheck})
   }
   return (
     <div className="container-fluid">
