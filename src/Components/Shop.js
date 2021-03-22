@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {getProductsByCount, searchByFilter} from '../functions/Product'
 import {getCategories} from '../functions/category'
+import {getSubs} from '../functions/sub'
 import {useSelector, useDispatch} from 'react-redux'
 import ProductCard from './cards/ProductCard'
 import {  DownSquareOutlined, DollarOutlined } from '@ant-design/icons';
@@ -12,8 +13,10 @@ const Shop = () => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
   const [ok, setOk] = useState(false);
-  const [categories, setCatergories] = useState([])
-  const [categoryIds, setCaategoryIds ] = useState([])
+  const [categories, setCategories] = useState([])
+  const [categoryIds, setCategoryIds ] = useState([])
+  const [subs, setSubs ] = useState([])
+  const [sub, setSub ] = useState("")
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -22,8 +25,9 @@ const Shop = () => {
   useEffect(() => {
     loadAllProducts();
     // fetch categories
-    getCategories().then((res) => setCatergories(res.data))
-
+    getCategories().then((res) => setCategories(res.data));
+    // fetch subcategories
+    getSubs().then((res) => setSubs(res.data));
   }, []);
 
   const filterProducts = (arg) => {
@@ -61,8 +65,9 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-    setCaategoryIds([])
+    setCategoryIds([])
     setPrice(value);
+    setSub("")
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -70,19 +75,21 @@ const Shop = () => {
 
   // load products base on the category 
   // show categories in a list of checkbox
-  const showCategories = () => categories.map((c) =>
-    <div key={c._id}>
-      <Checkbox 
-      onChange={handleCheck}
-      className="pb-2 pl-4 pr-4" 
-      value={c._id}
-      name="category"
-      checked={categoryIds.includes(c._id)}>
-        {c.name}
-        <br/>
-      </Checkbox>
-    </div>
-  )
+  const showCategories = () =>
+    categories.map((c) => (
+      <div key={c._id}>
+        <Checkbox
+          onChange={handleCheck}
+          className="pb-2 pl-4 pr-4"
+          value={c._id}
+          name="category"
+          checked={categoryIds.includes(c._id)}
+        >
+          {c.name}
+        </Checkbox>
+        <br />
+      </div>
+    ));
 
   // handle check functiom
   const handleCheck = (e) => {
@@ -91,6 +98,7 @@ const Shop = () => {
       payload: { text: "" },
     });
     setPrice([0,0])
+    setSub("")
     // console.log(e.target.value)
     let newCheck = [...categoryIds]
     let nextChecked = e.target.value
@@ -103,10 +111,37 @@ const Shop = () => {
       // if found pull out one item from index
       newCheck.splice(foundNewCheck, 1)
     }
-    setCaategoryIds(newCheck);
+    setCategoryIds(newCheck);
     // console.log(newCheck)
     filterProducts({category: newCheck})
   }
+
+  // show products by sub category
+  const showSubs = () =>
+  subs.map((s) => (
+    <div
+      key={s._id}
+      onClick={() => handleSub(s)}
+      className="p-1 m-1 badge badge-secondary"
+      style={{ cursor: "pointer" }}
+    >
+      {s.name}
+    </div>
+  ));
+
+  const handleSub = (sub) => {
+    // console.log("SUB Cat", s)
+    setSub(sub)
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setCategoryIds([])
+    setPrice([0, 0]);
+    filterProducts({ sub });
+    setSub("")
+  }
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -114,7 +149,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3"]} mode="inline">
             {/* Price */}
             <SubMenu
               key="1"
@@ -135,6 +170,7 @@ const Shop = () => {
                 />
               </div>
             </SubMenu>
+
               {/* Categories */}
             <SubMenu
               key="2"
@@ -144,10 +180,26 @@ const Shop = () => {
                 </span>
               }
             >
-              <div style={{ margin:"-10px"}}>
+              <div style={{ marginTop:"-10px"}}>
                 {showCategories()}
               </div>
             </SubMenu>
+
+            {/* Sub Categories */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Sub Categories
+                </span>
+              }
+            >
+              <div style={{ marginTop:"-10px"}} className="pl-4 pr-4">
+                {showSubs()}
+              </div>
+            </SubMenu>
+
+
           </Menu>
         </div>
 
