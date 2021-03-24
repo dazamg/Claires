@@ -12,6 +12,7 @@ import './Home.css';
 import Home from "./Components/Home"
 import SideDrawer from "./Components/drawer/SideDrawer"
 import Shop from "./Components/Shop"
+import Checkout from "./Components/Checkout"
 
 //Auth Components
 import Login from "./Components/Auth/Login"
@@ -143,7 +144,8 @@ const App = () => {
         {/* User Routes */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
-        <UserRoute exact path="/user/wishlist" component={WishList} />
+        <UserRoute exact path="/user/password" component={Password} />
+        <UserRoute exact path="/checkout" component={Checkout} />
         {/* Admin Routes */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />

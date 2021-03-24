@@ -2,7 +2,9 @@ import React from "react";
 import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import CartCheckoutCard from './cards/CartCheckoutCard'
-const Cart = () => {
+import {userCart} from '../functions/User'
+
+const Cart = ({history}) => {
   const { cart, user } = useSelector((state) => ({ ...state }));
 
 
@@ -13,8 +15,15 @@ const Cart = () => {
     }, 0);
   };
 
-  const checkOut = () => {
-
+  const checkOutOrder = () => {
+    // console.log("cart", JSON.stringify(cart, null, 4))
+    userCart(cart, user.token)
+    .then(res => {
+      console.log('CART POST RES', res)
+      if (res.data.ok) 
+      history.push('/checkout')
+    })
+    .catch((err) => console.log("cart save err", err))
   }
 
   const cartItems = () => (
@@ -68,7 +77,7 @@ const Cart = () => {
           <hr />
           {user ? (
             <button
-              onClick={checkOut}
+              onClick={checkOutOrder}
               className="btn btn-sm btn-primary mt-2 btn-raised"
               disabled={!cart.length}
             >
