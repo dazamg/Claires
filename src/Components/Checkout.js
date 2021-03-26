@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from "react-redux"
-import { getUserCart } from "../functions/User"
-import useSelection from 'antd/lib/table/hooks/useSelection'
+import { getUserCart, emptyUserCart, saveAddressInCart } from "../functions/User"
+import { toast } from 'react-toastify'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
 
 const Checkout = () => {
 
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
+    const [address, setAddress] = useState("")
+    const [saveAddress, setSaveAddress] = useState(false)
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => ({ ...state})); 
@@ -19,8 +23,33 @@ const Checkout = () => {
             setTotal(res.data.cartTotal)
         })
     }, [])
-    const checkOutOrder = () => {
+    const emptyCart = () => {
+        if(typeof window !== 'undefined') {
+            localStorage.removeItem("cart")
+        }
+        //remove from redux
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: [],
+        });
+        // Remove from backend
+        emptyUserCart(user.token)
+        .then(res => {
+            setProducts([])
+            setTotal(0);
+            toast.success("Cart is empty. Continue Shopping.")
+        })
+    }
 
+    const checkOutOrder = () => {
+        // console.log(address)
+        saveAddressInCart(user.token, address)
+        .then((res) => {
+            if(res.data.ok) {
+                setSaveAddress(true);
+                toast.success("Address saved")
+            }
+        })
     }
     return (
         <div className="row">
@@ -28,6 +57,10 @@ const Checkout = () => {
                 <h4>Delivery Address</h4>
                 <br/>
                 <br/>
+                <ReactQuill theme="snow" 
+                    value={address} 
+                    placeholder="Enter your Delivery Address Here"
+                    onChange={setAddress}/>
                 <button className="btn btn-primary mt-2" onClick={checkOutOrder}>
                     Save
                 </button>
@@ -57,10 +90,19 @@ const Checkout = () => {
 
                 <div className="row">
                     <div className="col-md-6">
-                        <button className="btn btn-primary">Place Order</button>
+                        <button 
+                        className="btn btn-primary"
+                        disabled={!saveAddress || !products.length}
+                        >Place Order</button>
                     </div>
                     <div className="col-md-6">
-                        <button className="btn btn-primary">Empty Cart</button>
+                        <button 
+                            disabled={!products.length}
+                            onClick={emptyCart} 
+                            className="btn btn-primary"
+                        >
+                            Empty Cart
+                        </button>
                     </div>
                 </div>
             </div>
